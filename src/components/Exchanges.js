@@ -4,6 +4,7 @@ import HTMLReactParser from "html-react-parser";
 import millify from "millify";
 
 import { useGetCryptoExchangesQuery } from "../services/cryptoApi";
+import dummyExchangeResponse from "../data/exchange.json";
 import Loader from "./Loader";
 
 const { Panel } = Collapse;
@@ -11,7 +12,8 @@ const { Text } = Typography;
 
 export default function Exchanges() {
   const { data, isFetching } = useGetCryptoExchangesQuery();
-  const exchanges = data?.data?.exchanges;
+  const exchanges =
+    data?.data?.exchanges || dummyExchangeResponse.data.exchanges;
 
   if (isFetching) {
     return <Loader />;
@@ -28,7 +30,7 @@ export default function Exchanges() {
       <Collapse>
         {exchanges.map((item) => (
           <Panel
-            key={item.id}
+            key={item.uuid}
             showArrow={false}
             header={
               <>
@@ -41,7 +43,7 @@ export default function Exchanges() {
                     <strong>{item.name}</strong>
                   </Text>
                 </Col>
-                <Col span={6}>${millify(item.volume)}</Col>
+                <Col span={6}>${millify(item["24hVolume"])}</Col>
                 <Col span={6}>{millify(item.numberOfMarkets)}</Col>
                 <Col span={6}>{millify(item.marketShare)}%</Col>
               </>
