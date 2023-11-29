@@ -302,6 +302,9 @@ a:hover {
 .news-title {
   width: 70%;
 }
+.not-found {
+  text-align: center;
+}
 
 .news-image-container .img {
   width: 100px;
